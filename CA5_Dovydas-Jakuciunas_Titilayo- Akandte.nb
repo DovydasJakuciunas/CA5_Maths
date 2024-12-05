@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     52081,       1262]
-NotebookOptionsPosition[     50592,       1224]
-NotebookOutlinePosition[     51019,       1241]
-CellTagsIndexPosition[     50976,       1238]
+NotebookDataLength[     62465,       1509]
+NotebookOptionsPosition[     60594,       1467]
+NotebookOutlinePosition[     61021,       1484]
+CellTagsIndexPosition[     60978,       1481]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -179,17 +179,53 @@ Cell[BoxData[{
           RowBox[{"AppendTo", "[", 
            RowBox[{"trajectory", ",", 
             RowBox[{"{", 
-             RowBox[{"t", ",", "p"}], "}"}]}], "]"}], ";"}]}], "]"}], ";", 
-       "\[IndentingNewLine]", "\[IndentingNewLine]", "trajectory"}]}], " ", 
-     "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+             RowBox[{"t", ",", "p", ",", "aV", ",", "v"}], "}"}]}], "]"}], 
+          ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "trajectory"}]}], " ", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"exportTrajectoryData", "[", 
+    RowBox[{"trajectory_", ",", "fileName_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "formattedData", "}"}], ",", 
+     RowBox[{"(*", 
+      RowBox[{"Format", " ", "trajectory", " ", 
+       RowBox[{"data", ":", 
+        RowBox[{"{", 
+         RowBox[{"Time", ",", "Velocity", ",", "Position"}], "}"}]}]}], 
+      "*)"}], 
+     RowBox[{
+      RowBox[{"formattedData", "=", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"trajectory", "/.", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"t_", ",", "p_", ",", "v_", ",", "aV_"}], "}"}], 
+           "\[RuleDelayed]", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", "v", ",", "aV", ",", "p"}], "}"}]}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<Time\>\"", ",", "\"\<Velocity\>\"", ",", 
+           "\"\<Acceleration\>\"", ",", "\"\<Position\>\""}], "}"}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Export", "[", 
+       RowBox[{"fileName", ",", "formattedData", ",", "\"\<CSV\>\""}], "]"}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"Print", "[", 
+       RowBox[{"\"\<Data exported to: \>\"", ",", "fileName"}], "]"}], 
+      ";"}]}], "]"}]}], "\n", "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{"Run", " ", "the", " ", "2", "D", " ", "simulation"}], 
-   "*)"}]}], "\n", 
+   "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"trajectoryData2D", "=", 
     RowBox[{"simulateObjectMotion2D", "[", "]"}]}], ";"}], 
-  "\[IndentingNewLine]", "\n", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
   RowBox[{"(*", 
    RowBox[{
    "Generate", " ", "a", " ", "plane", " ", "following", " ", "the", " ", 
@@ -243,8 +279,8 @@ Cell[BoxData[{
                RowBox[{"0", ",", "width"}], "}"}]}]}], "}"}], "]"}], ",", 
           RowBox[{"{", 
            RowBox[{"segment", ",", "segments"}], "}"}]}], "]"}]}], ";", 
-       "\[IndentingNewLine]", "plane"}]}], "]"}]}], ";"}], "\n", 
-  "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "plane"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\n", 
   RowBox[{"(*", 
    RowBox[{"Generate", " ", "the", " ", "plane", " ", "polygons"}], 
    "*)"}]}], "\[IndentingNewLine]", 
@@ -252,94 +288,126 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"trajectoryPlane", "=", 
     RowBox[{"generatePlaneFromTrajectory", "[", 
-     RowBox[{"trajectoryData2D", ",", "0.2"}], "]"}]}], ";"}], "\n", 
-  "\[IndentingNewLine]", 
+     RowBox[{"trajectoryData2D", ",", "0.2"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\n", 
   RowBox[{"(*", 
    RowBox[{"Visualization", " ", "with", " ", "Manipulate"}], 
    "*)"}]}], "\[IndentingNewLine]", 
- RowBox[{"Manipulate", "[", 
-  RowBox[{
-   RowBox[{"Module", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"currentData", ",", "currentPoint"}], "}"}], ",", 
-     "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"currentData", "=", 
-       RowBox[{
-        RowBox[{"Select", "[", 
-         RowBox[{"trajectoryData2D", ",", 
-          RowBox[{
-           RowBox[{
-            RowBox[{"#", "[", 
-             RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", "t"}], "&"}]}], 
-         "]"}], "[", 
-        RowBox[{"[", 
-         RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+      RowBox[{"{", 
+       RowBox[{"currentData", ",", "currentPoint"}], "}"}], ",", 
       "\[IndentingNewLine]", 
-      RowBox[{"currentPoint", "=", 
-       RowBox[{
-        RowBox[{"SelectFirst", "[", 
-         RowBox[{"trajectoryData2D", ",", 
-          RowBox[{
-           RowBox[{
-            RowBox[{"#", "[", 
-             RowBox[{"[", "1", "]"}], "]"}], "\[GreaterEqual]", "t"}], 
-           "&"}]}], "]"}], "[", 
-        RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
-      RowBox[{"Graphics", "[", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{
-         "LightBlue", ",", "trajectoryPlane", ",", "\[IndentingNewLine]", 
-          RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
-          "\[IndentingNewLine]", 
-          RowBox[{"Style", "[", 
-           RowBox[{
-            RowBox[{"Line", "[", "currentData", "]"}], ",", "Blue", ",", 
-            "Thick"}], "]"}], ",", "\[IndentingNewLine]", 
-          RowBox[{"Style", "[", 
-           RowBox[{
-            RowBox[{"Point", "[", "currentPoint", "]"}], ",", "Red", ",", 
-            RowBox[{"PointSize", "[", "Large", "]"}]}], "]"}]}], "}"}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"Axes", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
-        RowBox[{"AxesOrigin", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
-        RowBox[{"PlotRange", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "2"}], ",", "5"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "2"}], ",", "5"}], "}"}]}], "}"}]}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+      RowBox[{
+       RowBox[{"currentData", "=", 
         RowBox[{
-        "PlotLabel", "\[Rule]", "\"\<Trajectory with Aligned Plane\>\""}]}], 
-       "]"}]}]}], "]"}], ",", 
-   RowBox[{"{", 
+         RowBox[{"Select", "[", 
+          RowBox[{"trajectoryData2D", ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", "t"}], "&"}]}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"currentPoint", "=", 
+        RowBox[{
+         RowBox[{"SelectFirst", "[", 
+          RowBox[{"trajectoryData2D", ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "\[GreaterEqual]", "t"}], 
+            "&"}]}], "]"}], "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Graphics", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "LightBlue", ",", "trajectoryPlane", ",", "\[IndentingNewLine]", 
+           RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"Line", "[", "currentData", "]"}], ",", "Blue", ",", 
+             "Thick"}], "]"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"Point", "[", "currentPoint", "]"}], ",", "Red", ",", 
+             RowBox[{"PointSize", "[", "Large", "]"}]}], "]"}]}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Axes", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"AxesOrigin", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0"}], "}"}]}], ",", "\[IndentingNewLine]", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "2"}], ",", "5"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "2"}], ",", "5"}], "}"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+         RowBox[{
+         "PlotLabel", "\[Rule]", "\"\<Trajectory with Aligned Plane\>\""}]}], 
+        "]"}]}]}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0.1", ",", "\"\<Time\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"trajectoryData2D", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"trajectoryData2D", "[", 
+       RowBox[{"[", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "0.01"}], "}"}]}],
+    "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Export", " ", "trajectory", " ", "data"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"exportTrajectoryData", "[", 
     RowBox[{
-     RowBox[{"{", 
-      RowBox[{"t", ",", "0.1", ",", "\"\<Time\>\""}], "}"}], ",", 
-     "\[IndentingNewLine]", 
-     RowBox[{"trajectoryData2D", "[", 
-      RowBox[{"[", 
-       RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
-     RowBox[{"trajectoryData2D", "[", 
-      RowBox[{"[", 
-       RowBox[{
-        RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "0.01"}], "}"}]}], 
-  "]"}], "\n"}], "Input",
+    "trajectoryData2D", ",", "\[IndentingNewLine]", 
+     "\"\<E:\\\\Collage\\\\MathMatica\\\\CA5\\\\CA5_Maths\\\\Trajectory2D.csv\
+\>\""}], "]"}], ";"}], "\n"}], "\n"}], "Input",
  CellChangeTimes->{{3.942390180836553*^9, 3.9423901808375015`*^9}, {
-  3.942414538383312*^9, 3.9424145730555377`*^9}, {3.9424146333920517`*^9, 
-  3.9424147168569636`*^9}, {3.9424147475731387`*^9, 3.942414866321455*^9}, {
-  3.942423376262812*^9, 3.9424233768373003`*^9}, {3.9424255090668373`*^9, 
-  3.9424255859317136`*^9}},ExpressionUUID->"b5fd327f-678c-40a5-a336-\
+   3.942414538383312*^9, 3.9424145730555377`*^9}, {3.9424146333920517`*^9, 
+   3.9424147168569636`*^9}, {3.9424147475731387`*^9, 3.942414866321455*^9}, {
+   3.942423376262812*^9, 3.9424233768373003`*^9}, {3.9424255090668373`*^9, 
+   3.9424255859317136`*^9}, {3.94242574422993*^9, 3.9424257596862836`*^9}, {
+   3.942425835039285*^9, 3.9424258431408434`*^9}, {3.9424259306231184`*^9, 
+   3.9424259610731387`*^9}, {3.9424260666856313`*^9, 
+   3.9424260669482927`*^9}, {3.942426172822344*^9, 3.9424262211265287`*^9}, {
+   3.942426299138514*^9, 3.942426300114465*^9}, 3.942426437666339*^9, {
+   3.94242650386023*^9, 3.9424265298568897`*^9}, {3.9424266897495127`*^9, 
+   3.942426702448127*^9}, {3.9424267513861322`*^9, 3.9424267551730814`*^9}, {
+   3.94242679298153*^9, 3.942426813672626*^9}, {3.9424268950419188`*^9, 
+   3.942426900392289*^9}, {3.9424269704557858`*^9, 3.9424269710038977`*^9}, {
+   3.9424270931025686`*^9, 3.9424270975280495`*^9}, {3.942427145290636*^9, 
+   3.9424271469488964`*^9}, 3.9424272077561564`*^9, {3.94242726119711*^9, 
+   3.9424273174510393`*^9}},ExpressionUUID->"b5fd327f-678c-40a5-a336-\
 f3e3f15c35d4"],
+
+Cell[BoxData["\<\"C:\\\\Users\\\\dovyj\\\\Documents\"\>"], "Output",
+ CellChangeTimes->{
+  3.942426770644286*^9, {3.9424268013637605`*^9, 3.942426819050725*^9}, {
+   3.942426903884164*^9, 3.942426909637993*^9}, 3.942426972307227*^9, 
+   3.942427020147854*^9, {3.942427098123989*^9, 3.9424271033255825`*^9}, 
+   3.9424271473310184`*^9, 3.942427208767084*^9, {3.942427264026069*^9, 
+   3.942427308798997*^9}},
+ CellLabel->
+  "Out[832]=",ExpressionUUID->"4f840856-f4de-4319-a14a-c059e4c28a6e"],
 
 Cell[BoxData[
  TagBox[
@@ -391,18 +459,33 @@ $CellContext`currentData$ = Part[
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
  CellChangeTimes->{
-  3.9423782104536457`*^9, 3.942378366010538*^9, {3.9423784842134027`*^9, 
-   3.9423785829784155`*^9}, 3.9423790088679323`*^9, 3.94237932364366*^9, 
-   3.9423793795235777`*^9, {3.94238071513395*^9, 3.9423807308322597`*^9}, 
-   3.942380808774825*^9, {3.942388695627264*^9, 3.9423886997065125`*^9}, {
-   3.9423892385878897`*^9, 3.942389243375963*^9}, 3.9423893335177665`*^9, {
-   3.9423895395172014`*^9, 3.9423895463815713`*^9}, 3.942389659499552*^9, 
-   3.942389817366788*^9, 3.9423899669712424`*^9, 3.9423903720353756`*^9, 
-   3.94239050590269*^9, 3.9424147689626427`*^9, 3.9424148414252605`*^9, 
-   3.9424229738062024`*^9, 3.9424254238672233`*^9, 3.942425510213749*^9, 
-   3.9424255840081224`*^9},
+  3.942426770644286*^9, {3.9424268013637605`*^9, 3.942426819050725*^9}, {
+   3.942426903884164*^9, 3.942426909637993*^9}, 3.942426972307227*^9, 
+   3.942427020147854*^9, {3.942427098123989*^9, 3.9424271033255825`*^9}, 
+   3.9424271473310184`*^9, 3.942427208767084*^9, {3.942427264026069*^9, 
+   3.9424273088189993`*^9}},
  CellLabel->
-  "Out[551]=",ExpressionUUID->"1fb3b782-e992-4426-88b4-9c25881f7a20"]
+  "Out[834]=",ExpressionUUID->"428a7b11-9198-4643-93b6-24bc330c3463"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Data exported to: \"\>", 
+   "\[InvisibleSpace]", \
+"\<\"E:\\\\Collage\\\\MathMatica\\\\CA5\\\\CA5_Maths\\\\Trajectory2D.csv\"\>"}\
+],
+  SequenceForm[
+  "Data exported to: ", 
+   "E:\\Collage\\MathMatica\\CA5\\CA5_Maths\\Trajectory2D.csv"],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.9424267706422834`*^9, {3.9424268013627605`*^9, 3.9424268190487213`*^9}, {
+   3.942426903883164*^9, 3.942426909635994*^9}, 3.9424269723052273`*^9, 
+   3.942427020145857*^9, {3.9424270981219893`*^9, 3.9424271033235826`*^9}, 
+   3.942427147390541*^9, 3.942427208824398*^9, {3.9424272640680723`*^9, 
+   3.942427308856954*^9}},
+ CellLabel->
+  "During evaluation of \
+In[828]:=",ExpressionUUID->"39fdd5b0-d8c0-47ca-8f33-305748d94e59"]
 }, Open  ]]
 }, Open  ]],
 
@@ -552,9 +635,43 @@ Cell[BoxData[
            RowBox[{"AppendTo", "[", 
             RowBox[{"trajectory", ",", 
              RowBox[{"{", 
-              RowBox[{"t", ",", "p"}], "}"}]}], "]"}], ";"}]}], "]"}], ";", 
-        "\[IndentingNewLine]", "trajectory"}]}], " ", "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\n", 
+              RowBox[{"t", ",", "p", ",", "v", ",", "aV"}], "}"}]}], "]"}], 
+           ";"}]}], "]"}], ";", "\[IndentingNewLine]", "trajectory"}]}], " ", 
+      "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"exportTrajectoryData", "[", 
+     RowBox[{"trajectory_", ",", "fileName_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "formattedData", "}"}], ",", 
+      RowBox[{"(*", 
+       RowBox[{"Format", " ", "trajectory", " ", 
+        RowBox[{"data", ":", 
+         RowBox[{"{", 
+          RowBox[{"Time", ",", "Velocity", ",", "Position"}], "}"}]}]}], 
+       "*)"}], 
+      RowBox[{
+       RowBox[{"formattedData", "=", 
+        RowBox[{"Prepend", "[", 
+         RowBox[{
+          RowBox[{"trajectory", "/.", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t_", ",", "p_", ",", "v_", ",", "aV_"}], "}"}], 
+            "\[RuleDelayed]", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", "v", ",", "aV", ",", "p"}], "}"}]}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<Time\>\"", ",", "\"\<Velocity\>\"", ",", 
+            "\"\<Acceleration\>\"", ",", "\"\<Position\>\""}], "}"}]}], 
+         "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{"fileName", ",", "formattedData", ",", "\"\<CSV\>\""}], "]"}],
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", 
+        RowBox[{"\"\<Data exported to: \>\"", ",", "fileName"}], "]"}], 
+       ";"}]}], "]"}]}], "\n", "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"Generate", " ", "plane", " ", "on", " ", "trajectory"}], "*)"}], 
    "\[IndentingNewLine]", 
@@ -636,9 +753,55 @@ Cell[BoxData[
         RowBox[{"Flatten", "[", "triangles", "]"}]}]}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"trajectoryData3D", "=", 
-     RowBox[{"simulateObjectMotion3D", "[", "]"}]}], ";"}], "\n", 
+    RowBox[{"exportTrajectoryData", "[", 
+     RowBox[{"trajectory_", ",", "fileName_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "formattedData", "}"}], ",", 
+      RowBox[{"(*", 
+       RowBox[{"Format", " ", "trajectory", " ", 
+        RowBox[{"data", ":", 
+         RowBox[{"{", 
+          RowBox[{"Time", ",", "Velocity", ",", "Position"}], "}"}]}]}], 
+       "*)"}], 
+      RowBox[{
+       RowBox[{"formattedData", "=", 
+        RowBox[{"Prepend", "[", 
+         RowBox[{
+          RowBox[{"trajectory", "/.", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"t_", ",", "p_", ",", "v_", ",", "aV_"}], "}"}], 
+            "\[RuleDelayed]", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", "v", ",", "aV", ",", "p"}], "}"}]}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<Time\>\"", ",", "\"\<Velocity\>\"", ",", 
+            "\"\<Acceleration\>\"", ",", "\"\<Position\>\""}], "}"}]}], 
+         "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Export", "[", 
+        RowBox[{"fileName", ",", "formattedData", ",", "\"\<CSV\>\""}], "]"}],
+        ";", "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", 
+        RowBox[{"\"\<Data exported to: \>\"", ",", "fileName"}], "]"}], 
+       ";"}]}], "]"}]}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Run", " ", "the", " ", "2", "D", " ", "simulation"}], "*)"}], 
    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"trajectoryData3D", "=", 
+     RowBox[{"simulateObjectMotion3D", "[", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Export", " ", "trajectory", " ", "data"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"exportTrajectoryData", "[", 
+     RowBox[{
+     "trajectoryData3D", ",", "\[IndentingNewLine]", 
+      "\"\<E:\\\\Collage\\\\MathMatica\\\\CA5\\\\CA5_Maths\\\\Trajectory3D.\
+csv\>\""}], "]"}], ";"}], "\n", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"trajectoryPlane", "=", 
      RowBox[{"generateTrajectoryPlane", "[", 
@@ -741,13 +904,31 @@ Cell[BoxData[
         RowBox[{"[", 
          RowBox[{
           RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "0.01"}], 
-      "}"}]}], "]"}], "\n", "\n"}]}]], "Input",
+      "}"}]}], "]"}], "\n", "\n", "\[IndentingNewLine]", "\n", 
+   "\[IndentingNewLine]"}]}]], "Input",
  CellChangeTimes->{{3.9424148530924153`*^9, 3.942414853500751*^9}, {
    3.942423001304229*^9, 3.942423006971813*^9}, {3.942423075043174*^9, 
    3.9424231895096793`*^9}, {3.9424232216220555`*^9, 3.942423221823724*^9}, 
-   3.942423268773012*^9, {3.9424252317369394`*^9, 3.9424253853474426`*^9}},
+   3.942423268773012*^9, {3.9424252317369394`*^9, 3.9424253853474426`*^9}, {
+   3.9424265543034477`*^9, 3.942426564775489*^9}, {3.942427325409602*^9, 
+   3.942427382176425*^9}},ExpressionUUID->"6fce5142-58e7-4ac9-99c9-\
+b1cb707e61ad"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Data exported to: \"\>", 
+   "\[InvisibleSpace]", \
+"\<\"E:\\\\Collage\\\\MathMatica\\\\CA5\\\\CA5_Maths\\\\Trajectory3D.csv\"\>"}\
+],
+  SequenceForm[
+  "Data exported to: ", 
+   "E:\\Collage\\MathMatica\\CA5\\CA5_Maths\\Trajectory3D.csv"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.942426566442579*^9, 3.942427333292592*^9, 
+  3.942427366948409*^9},
  CellLabel->
-  "In[552]:=",ExpressionUUID->"6fce5142-58e7-4ac9-99c9-b1cb707e61ad"],
+  "During evaluation of \
+In[845]:=",ExpressionUUID->"07d2f37d-cb39-498b-8a08-ec11c162ddef"],
 
 Cell[BoxData[
  TagBox[
@@ -802,9 +983,10 @@ $CellContext`currentData$ = Part[
   Manipulate`InterpretManipulate[1]]], "Output",
  CellChangeTimes->{{3.9424229924003906`*^9, 3.942423007591792*^9}, {
    3.942423183123658*^9, 3.9424231906424365`*^9}, 3.942423269857507*^9, 
-   3.942425232745232*^9, 3.942425592803079*^9},
+   3.942425232745232*^9, {3.942425592803079*^9, 3.9424256100684214`*^9}, 
+   3.942426566461567*^9, 3.9424273333025923`*^9, 3.9424273669566507`*^9},
  CellLabel->
-  "Out[556]=",ExpressionUUID->"7407c488-27f6-4170-982a-4e7a3cd85ced"]
+  "Out[852]=",ExpressionUUID->"7e3f6828-29d1-4ae0-aea3-c2e248f721e8"]
 }, Open  ]]
 }, Open  ]],
 
@@ -957,8 +1139,43 @@ Cell[BoxData[{
               RowBox[{"t", ",", "p", ",", "v", ",", "aV"}], "}"}]}], "]"}], 
            ";"}], "\[IndentingNewLine]", ";"}]}], "]"}], ";", 
        "\[IndentingNewLine]", "trajectory"}]}], " ", "]"}]}], ";"}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", "Generate", "*)"}]}], "\n", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"exportTrajectoryData", "[", 
+    RowBox[{"trajectory_", ",", "fileName_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "formattedData", "}"}], ",", 
+     RowBox[{"(*", 
+      RowBox[{"Format", " ", "trajectory", " ", 
+       RowBox[{"data", ":", 
+        RowBox[{"{", 
+         RowBox[{"Time", ",", "Velocity", ",", "Position"}], "}"}]}]}], 
+      "*)"}], 
+     RowBox[{
+      RowBox[{"formattedData", "=", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"trajectory", "/.", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"t_", ",", "p_", ",", "v_", ",", "aV_"}], "}"}], 
+           "\[RuleDelayed]", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", "v", ",", "aV", ",", "p"}], "}"}]}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<Time\>\"", ",", "\"\<Velocity\>\"", ",", 
+           "\"\<Acceleration\>\"", ",", "\"\<Position\>\""}], "}"}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Export", "[", 
+       RowBox[{"fileName", ",", "formattedData", ",", "\"\<CSV\>\""}], "]"}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"Print", "[", 
+       RowBox[{"\"\<Data exported to: \>\"", ",", "fileName"}], "]"}], 
+      ";"}]}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", "Generate", "*)"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{
@@ -1041,110 +1258,120 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"trajectoryData3D", "=", 
     RowBox[{"simulateObjectMotion3D", "[", "]"}]}], ";"}], 
-  "\n"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"trajectoryPlane", "=", 
     RowBox[{"generateTrajectoryPlane", "[", 
      RowBox[{"trajectoryData3D", ",", "0.5"}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\n", 
- RowBox[{"Manipulate", "[", 
-  RowBox[{
-   RowBox[{"Module", "[", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"currentData", ",", "currentPoint"}], "}"}], ",", 
-     "\[IndentingNewLine]", 
+  "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"Module", "[", 
      RowBox[{
-      RowBox[{"currentData", "=", 
-       RowBox[{
-        RowBox[{"Select", "[", 
-         RowBox[{"trajectoryData3D", ",", 
-          RowBox[{
-           RowBox[{
-            RowBox[{"#", "[", 
-             RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", "t"}], "&"}]}], 
-         "]"}], "[", 
-        RowBox[{"[", 
-         RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+      RowBox[{"{", 
+       RowBox[{"currentData", ",", "currentPoint"}], "}"}], ",", 
       "\[IndentingNewLine]", 
-      RowBox[{"currentPoint", "=", 
-       RowBox[{
-        RowBox[{"SelectFirst", "[", 
-         RowBox[{"trajectoryData3D", ",", 
-          RowBox[{
+      RowBox[{
+       RowBox[{"currentData", "=", 
+        RowBox[{
+         RowBox[{"Select", "[", 
+          RowBox[{"trajectoryData3D", ",", 
            RowBox[{
-            RowBox[{"#", "[", 
-             RowBox[{"[", "1", "]"}], "]"}], "\[GreaterEqual]", "t"}], 
-           "&"}]}], "]"}], "[", 
-        RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
-      RowBox[{"Graphics3D", "[", 
-       RowBox[{
-        RowBox[{"{", 
-         RowBox[{
-         "LightGray", ",", "trajectoryPlane", ",", "\[IndentingNewLine]", 
-          RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
-          "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "\[LessEqual]", "t"}], "&"}]}], 
+          "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"currentPoint", "=", 
+        RowBox[{
+         RowBox[{"SelectFirst", "[", 
+          RowBox[{"trajectoryData3D", ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "\[GreaterEqual]", "t"}], 
+            "&"}]}], "]"}], "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Graphics3D", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "LightGray", ",", "trajectoryPlane", ",", "\[IndentingNewLine]", 
+           RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"Line", "[", "currentData", "]"}], ",", "Blue", ",", 
+             "Thick"}], "]"}], ",", "\[IndentingNewLine]", 
+           RowBox[{"Style", "[", 
+            RowBox[{
+             RowBox[{"Point", "[", "currentPoint", "]"}], ",", "Red", ",", 
+             RowBox[{"PointSize", "[", "Large", "]"}]}], "]"}]}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Axes", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"AxesOrigin", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"AxesLabel", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"\"\<X\>\"", ",", "\"\<Y\>\"", ",", "\"\<Z\>\""}], "}"}]}],
+          ",", "\[IndentingNewLine]", 
+         RowBox[{"TicksStyle", "\[Rule]", 
+          RowBox[{"Directive", "[", 
+           RowBox[{"Gray", ",", "Bold"}], "]"}]}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Boxed", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"BoxRatios", "\[Rule]", "Automatic"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"ViewPoint", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{"2", ",", 
+            RowBox[{"-", "2"}], ",", "1"}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"ViewAngle", "\[Rule]", "0.4"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "3"}], ",", "6"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "3"}], ",", "6"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "6"}], "}"}]}], "}"}]}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"PlotLabel", "\[Rule]", 
           RowBox[{"Style", "[", 
            RowBox[{
-            RowBox[{"Line", "[", "currentData", "]"}], ",", "Blue", ",", 
-            "Thick"}], "]"}], ",", "\[IndentingNewLine]", 
-          RowBox[{"Style", "[", 
-           RowBox[{
-            RowBox[{"Point", "[", "currentPoint", "]"}], ",", "Red", ",", 
-            RowBox[{"PointSize", "[", "Large", "]"}]}], "]"}]}], "}"}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"Axes", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
-        RowBox[{"AxesOrigin", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"AxesLabel", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{"\"\<X\>\"", ",", "\"\<Y\>\"", ",", "\"\<Z\>\""}], "}"}]}], 
-        ",", "\[IndentingNewLine]", 
-        RowBox[{"TicksStyle", "\[Rule]", 
-         RowBox[{"Directive", "[", 
-          RowBox[{"Gray", ",", "Bold"}], "]"}]}], ",", "\[IndentingNewLine]", 
-        RowBox[{"Boxed", "\[Rule]", "True"}], ",", "\[IndentingNewLine]", 
-        RowBox[{"BoxRatios", "\[Rule]", "Automatic"}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"ViewPoint", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{"2", ",", 
-           RowBox[{"-", "2"}], ",", "1"}], "}"}]}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"ViewAngle", "\[Rule]", "0.4"}], ",", "\[IndentingNewLine]", 
-        RowBox[{"PlotRange", "\[Rule]", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "3"}], ",", "6"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{
-             RowBox[{"-", "3"}], ",", "6"}], "}"}], ",", 
-           RowBox[{"{", 
-            RowBox[{"0", ",", "6"}], "}"}]}], "}"}]}], ",", 
-        "\[IndentingNewLine]", 
-        RowBox[{"PlotLabel", "\[Rule]", 
-         RowBox[{"Style", "[", 
-          RowBox[{
-          "\"\<3D Trajectory with Surface\>\"", ",", "Bold", ",", "14"}], 
-          "]"}]}]}], "]"}]}]}], "]"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-     RowBox[{"{", 
-      RowBox[{"t", ",", "0.1", ",", "\"\<Time\>\""}], "}"}], ",", 
-     "\[IndentingNewLine]", 
-     RowBox[{"trajectoryData3D", "[", 
-      RowBox[{"[", 
-       RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
-     RowBox[{"trajectoryData3D", "[", 
-      RowBox[{"[", 
-       RowBox[{
-        RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "0.01"}], "}"}]}], 
-  "]"}]}], "Input",
+           "\"\<3D Trajectory with Surface\>\"", ",", "Bold", ",", "14"}], 
+           "]"}]}]}], "]"}]}]}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"t", ",", "0.1", ",", "\"\<Time\>\""}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"trajectoryData3D", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"trajectoryData3D", "[", 
+       RowBox[{"[", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "0.01"}], "}"}]}],
+    "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Export", " ", "trajectory", " ", "data"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"exportTrajectoryData", "[", 
+   RowBox[{
+   "trajectoryData3D", ",", "\[IndentingNewLine]", 
+    "\"\<E:\\\\Collage\\\\MathMatica\\\\CA5\\\\CA5_Maths\\\\Trajectory3D-\
+Curved.csv\>\""}], "]"}], ";"}], "\n"}], "Input",
  CellChangeTimes->{{3.9424148530924153`*^9, 3.942414853500751*^9}, {
    3.942423001304229*^9, 3.942423006971813*^9}, {3.942423075043174*^9, 
    3.9424231895096793`*^9}, {3.9424232216220555`*^9, 3.942423221823724*^9}, 
@@ -1156,9 +1383,10 @@ Cell[BoxData[{
    3.9424247254023676`*^9, 3.942424739351244*^9}, 3.9424247839732356`*^9, 
    3.942424822612703*^9, {3.9424249432979317`*^9, 3.9424249845154133`*^9}, 
    3.942425071688054*^9, {3.942425164254368*^9, 3.942425207703459*^9}, {
-   3.9424254041892166`*^9, 3.9424254122935925`*^9}},
+   3.9424254041892166`*^9, 3.9424254122935925`*^9}, {3.9424273921605053`*^9, 
+   3.9424274095107927`*^9}},
  CellLabel->
-  "In[557]:=",ExpressionUUID->"20436f68-1079-49b3-90b9-952db3ecd118"],
+  "In[853]:=",ExpressionUUID->"20436f68-1079-49b3-90b9-952db3ecd118"],
 
 Cell[BoxData[
  TagBox[
@@ -1215,9 +1443,24 @@ $CellContext`currentData$ = Part[
    3.942424729094192*^9, {3.942424788395667*^9, 3.9424247903626623`*^9}, 
    3.9424249855016785`*^9, 3.9424250729113016`*^9, {3.942425175068409*^9, 
    3.942425187318633*^9}, {3.9424254069792185`*^9, 3.9424254138347235`*^9}, 
-   3.942425598427053*^9},
+   3.942425598427053*^9, 3.942427410377112*^9},
  CellLabel->
-  "Out[561]=",ExpressionUUID->"5b9140a3-f109-46a6-ad03-d7458bb1fa06"]
+  "Out[858]=",ExpressionUUID->"05c9f94d-69c2-4492-ae38-68d4b1702ef2"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Data exported to: \"\>", 
+   "\[InvisibleSpace]", \
+"\<\"E:\\\\Collage\\\\MathMatica\\\\CA5\\\\CA5_Maths\\\\Trajectory3D-Curved.\
+csv\"\>"}],
+  SequenceForm[
+  "Data exported to: ", 
+   "E:\\Collage\\MathMatica\\CA5\\CA5_Maths\\Trajectory3D-Curved.csv"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.9424274107305346`*^9},
+ CellLabel->
+  "During evaluation of \
+In[853]:=",ExpressionUUID->"21091a58-1a5f-4ade-8748-9b8316cc4e30"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
@@ -1227,7 +1470,7 @@ WindowMargins->{{0, Automatic}, {Automatic, 0}},
 Magnification:>1.1 Inherited,
 FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 9, 2020)",
 StyleDefinitions->"Default.nb",
-ExpressionUUID->"7d2908f7-cb3e-4abd-852e-8b82cf60ba3b"
+ExpressionUUID->"a01bed07-6947-49c5-a957-d969b33a5364"
 ]
 (* End of Notebook Content *)
 
@@ -1245,22 +1488,26 @@ Cell[580, 22, 195, 6, 175, "Title",ExpressionUUID->"18b719ef-66b8-40fd-830b-4d2b
 Cell[CellGroupData[{
 Cell[800, 32, 184, 3, 73, "Section",ExpressionUUID->"c4ad018d-467f-48d5-bf0b-2e2e931293ff"],
 Cell[CellGroupData[{
-Cell[1009, 39, 12324, 302, 1881, "Input",ExpressionUUID->"b5fd327f-678c-40a5-a336-f3e3f15c35d4"],
-Cell[13336, 343, 3128, 61, 540, "Output",ExpressionUUID->"1fb3b782-e992-4426-88b4-9c25881f7a20"]
+Cell[1009, 39, 15027, 360, 2145, "Input",ExpressionUUID->"b5fd327f-678c-40a5-a336-f3e3f15c35d4"],
+Cell[16039, 401, 490, 8, 36, "Output",ExpressionUUID->"4f840856-f4de-4319-a14a-c059e4c28a6e"],
+Cell[16532, 411, 2751, 56, 540, "Output",ExpressionUUID->"428a7b11-9198-4643-93b6-24bc330c3463"],
+Cell[19286, 469, 772, 18, 23, "Print",ExpressionUUID->"39fdd5b0-d8c0-47ca-8f33-305748d94e59"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[16513, 410, 172, 6, 115, "Section",ExpressionUUID->"81939551-bb4e-4e98-9fbc-9b20b796985c"],
+Cell[20107, 493, 172, 6, 115, "Section",ExpressionUUID->"81939551-bb4e-4e98-9fbc-9b20b796985c"],
 Cell[CellGroupData[{
-Cell[16710, 420, 13822, 329, 1859, "Input",ExpressionUUID->"6fce5142-58e7-4ac9-99c9-b1cb707e61ad"],
-Cell[30535, 751, 2780, 55, 556, "Output",ExpressionUUID->"7407c488-27f6-4170-982a-4e7a3cd85ced"]
+Cell[20304, 503, 17183, 411, 2299, "Input",ExpressionUUID->"6fce5142-58e7-4ac9-99c9-b1cb707e61ad"],
+Cell[37490, 916, 514, 14, 23, "Print",ExpressionUUID->"07d2f37d-cb39-498b-8a08-ec11c162ddef"],
+Cell[38007, 932, 2880, 56, 536, "Output",ExpressionUUID->"7e3f6828-29d1-4ae0-aea3-c2e248f721e8"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[33364, 812, 172, 6, 115, "Section",ExpressionUUID->"dea95026-8578-46f0-a7e6-8a97da80d00b"],
+Cell[40936, 994, 172, 6, 115, "Section",ExpressionUUID->"dea95026-8578-46f0-a7e6-8a97da80d00b"],
 Cell[CellGroupData[{
-Cell[33561, 822, 14076, 338, 1793, "Input",ExpressionUUID->"20436f68-1079-49b3-90b9-952db3ecd118"],
-Cell[47640, 1162, 2912, 57, 556, "Output",ExpressionUUID->"5b9140a3-f109-46a6-ad03-d7458bb1fa06"]
+Cell[41133, 1004, 15998, 384, 2057, "Input",ExpressionUUID->"20436f68-1079-49b3-90b9-952db3ecd118"],
+Cell[57134, 1390, 2934, 57, 536, "Output",ExpressionUUID->"05c9f94d-69c2-4492-ae38-68d4b1702ef2"],
+Cell[60071, 1449, 483, 13, 23, "Print",ExpressionUUID->"21091a58-1a5f-4ade-8748-9b8316cc4e30"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
