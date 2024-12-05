@@ -10,330 +10,341 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     15628,        350]
-NotebookOptionsPosition[     15115,        332]
-NotebookOutlinePosition[     15542,        349]
-CellTagsIndexPosition[     15499,        346]
+NotebookDataLength[     14299,        361]
+NotebookOptionsPosition[     13777,        343]
+NotebookOutlinePosition[     14213,        360]
+CellTagsIndexPosition[     14170,        357]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
-  RowBox[{"(*", 
-   RowBox[{"Inital", " ", "Conditions"}], "*)"}], "\[IndentingNewLine]", 
   RowBox[{
    RowBox[{
-    RowBox[{"mass", " ", "=", " ", "1.1"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"g", " ", "=", " ", "9.81"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"k", " ", "=", " ", 
-     RowBox[{"{", 
-      RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"n", "=", 
-     RowBox[{"{", 
-      RowBox[{"6", ",", "10", ",", "7"}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"uStatic", " ", "=", " ", "0.5"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"uKinetic", " ", "=", " ", "0.1"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"p", " ", "=", " ", 
-     RowBox[{"{", 
-      RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"v", "=", 
-     RowBox[{"{", 
-      RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"tA", " ", "=", " ", "0.01"}], ";"}], "\[IndentingNewLine]", 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"simulateObjectMotion", "[", "]"}], " ", ":=", " ", 
-     "\[IndentingNewLine]", 
-     RowBox[{"Module", "[", " ", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{"t", "=", "0"}], ",", 
-         RowBox[{"trajectory", " ", "=", 
-          RowBox[{"{", "}"}]}], ",", "nHat", ",", "Fg", ",", "Fgn", ",", 
-         "Fgp", ",", "FgpL", ",", "FfU", ",", "FnHat", ",", "Fn", ",", "FnL", 
-         ",", "FfHat", ",", "FfK", ",", "FfV", ",", "FnetaV", ",", "aL", ",", 
-         "aHat"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"simulateObjectMotion2D", "[", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
        RowBox[{
-        RowBox[{"p", "=", 
-         RowBox[{"{", 
-          RowBox[{
-           RowBox[{"-", "1"}], ",", "2", ",", "3"}], "}"}]}], ";", 
-        "\[IndentingNewLine]", 
-        RowBox[{"v", "=", 
-         RowBox[{"{", 
-          RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ";", 
-        "\[IndentingNewLine]", 
-        RowBox[{"g", "=", "9.81"}], ";", "\[IndentingNewLine]", 
-        RowBox[{"n", "=", 
-         RowBox[{"{", 
-          RowBox[{"6", ",", "10", ",", "7"}], "}"}]}], ";", 
-        "\[IndentingNewLine]", 
-        RowBox[{"mass", "=", "1.1"}], ";", "\[IndentingNewLine]", 
-        RowBox[{"uStatic", "=", "0.5"}], ";", "\[IndentingNewLine]", 
-        RowBox[{"uKinetic", "=", "0.4"}], ";", "\[IndentingNewLine]", 
-        RowBox[{"tA", "=", "0.01"}], ";", "\[IndentingNewLine]", 
-        RowBox[{"nHat", "=", 
+        RowBox[{"t", "=", "0"}], ",", 
+        RowBox[{"trajectory", "=", 
+         RowBox[{"{", "}"}]}], ",", "nHat", ",", "Fg", ",", "Fgn", ",", "Fgp",
+         ",", "FgpL", ",", "FfU", ",", "Fn", ",", "FnL", ",", "FfHat", ",", 
+        "FfK", ",", "FfV", ",", "aV", ",", "frictionType", ",", "p", ",", "v",
+         ",", "g", ",", "n", ",", "mass", ",", "uStatic", ",", "uKinetic", 
+        ",", "tA"}], "}"}], ",", 
+      RowBox[{"(*", 
+       RowBox[{"Initial", " ", "conditions"}], "*)"}], 
+      RowBox[{
+       RowBox[{"p", "=", 
+        RowBox[{"{", 
          RowBox[{
-          RowBox[{"(", 
-           RowBox[{"1", "/", 
-            RowBox[{"Norm", "[", "n", "]"}]}], ")"}], " ", "n"}]}], ";", 
-        "\[IndentingNewLine]", "\[IndentingNewLine]", 
-        RowBox[{"While", "[", 
+          RowBox[{"-", "1"}], ",", "2"}], "}"}]}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Initial", " ", "position", " ", 
+         RowBox[{"(", 
+          RowBox[{"2", "D"}], ")"}]}], "*)"}], 
+       RowBox[{"v", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Initial", " ", "velocity", " ", 
+         RowBox[{"(", 
+          RowBox[{"2", "D"}], ")"}]}], "*)"}], 
+       RowBox[{"g", "=", "9.81"}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Gravitational", " ", "acceleration"}], "*)"}], 
+       RowBox[{"n", "=", 
+        RowBox[{"{", 
+         RowBox[{"6", ",", "10"}], "}"}]}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Hill", " ", "normal", " ", "vector", " ", 
+         RowBox[{"(", 
+          RowBox[{"2", "D"}], ")"}]}], "*)"}], 
+       RowBox[{"mass", "=", "1.1"}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Mass", " ", "of", " ", "the", " ", "object"}], "*)"}], 
+       RowBox[{"uStatic", "=", "0.5"}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Static", " ", "friction", " ", "coefficient"}], "*)"}], 
+       RowBox[{"uKinetic", "=", "0.4"}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Kinetic", " ", "friction", " ", "coefficient"}], "*)"}], 
+       RowBox[{"tA", "=", "0.01"}], ";", 
+       RowBox[{"(*", 
+        RowBox[{"Time", " ", "step"}], "*)"}], 
+       RowBox[{"nHat", "=", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "/", 
+           RowBox[{"Norm", "[", "n", "]"}]}], ")"}], " ", "n"}]}], ";", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Unit", " ", "vector", " ", "of", " ", "the", " ", "hill", " ", 
+         "normal"}], "*)"}], 
+       RowBox[{"While", "[", 
+        RowBox[{
          RowBox[{
+          RowBox[{"p", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ">", "0"}], ",", 
+         RowBox[{"(*", 
+          RowBox[{"Continue", " ", "simulation", " ", "until", " ", "y", " ", 
+           RowBox[{"(", "height", ")"}], " ", "is", " ", "0", " ", "or", " ", 
+           "below"}], "*)"}], 
+         RowBox[{"(*", 
           RowBox[{
-           RowBox[{"p", "[", 
-            RowBox[{"[", "3", "]"}], "]"}], ">", "0"}], ",", 
+          "Force", " ", "of", " ", "Gravity", " ", "in", " ", "the", " ", "2",
+            "D", " ", "system"}], "*)"}], 
+         RowBox[{
+          RowBox[{"Fg", "=", 
+           RowBox[{
+            RowBox[{"-", "mass"}], " ", "g", " ", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "1"}], "}"}]}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"Gravity", " ", "acts", " ", "vertically", " ", "down"}], 
+           "*)"}], 
+          RowBox[{"(*", 
+           RowBox[{
+           "Force", " ", "due", " ", "to", " ", "Gravity", " ", "Normal", " ",
+             "to", " ", "Surface"}], "*)"}], 
+          RowBox[{"Fgn", "=", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"Fg", ".", "nHat"}], ")"}], " ", "nHat"}]}], ";", 
           "\[IndentingNewLine]", 
           RowBox[{"(*", 
-           RowBox[{"Force", " ", "of", " ", "Gravity"}], "*)"}], 
-          "\[IndentingNewLine]", 
-          RowBox[{
-           RowBox[{"Fg", "=", " ", 
+           RowBox[{
+           "Force", " ", "due", " ", "to", " ", "Gravity", " ", "Parallel", 
+            " ", "to", " ", "Surface"}], "*)"}], 
+          RowBox[{"Fgp", "=", 
+           RowBox[{"Fg", "-", "Fgn"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"FgpL", "=", 
+           RowBox[{"Norm", "[", "Fgp", "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"Normal", " ", "Force"}], "*)"}], 
+          RowBox[{"Fn", "=", 
+           RowBox[{"-", "Fgn"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"FnL", "=", 
+           RowBox[{"Norm", "[", "Fn", "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"Determine", " ", "Friction", " ", "Type"}], "*)"}], 
+          RowBox[{"FfU", "=", 
+           RowBox[{"uStatic", " ", "FnL"}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"Maximum", " ", "static", " ", "friction"}], "*)"}], 
+          RowBox[{"frictionType", "=", 
+           RowBox[{"If", "[", 
             RowBox[{
-             RowBox[{"-", "mass"}], 
-             RowBox[{"(", "g", ")"}], 
-             RowBox[{"(", "k", ")"}]}]}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{"Force", " ", "of", " ", "GN"}], "*)"}], 
-           "\[IndentingNewLine]", 
-           RowBox[{"Fgn", " ", "=", " ", 
+             RowBox[{"FfU", "<=", "FgpL"}], ",", "\"\<Kinetic\>\"", ",", 
+             "\"\<Static\>\""}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"Frictional", " ", "Forces"}], "*)"}], 
+          RowBox[{"FfHat", "=", 
+           RowBox[{"If", "[", 
             RowBox[{
-             RowBox[{"(", 
-              RowBox[{"Fg", " ", ".", " ", "nHat"}], ")"}], "nHat"}]}], ";", 
-           "\[IndentingNewLine]", "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{"Force", " ", "of", " ", "GP"}], "*)"}], 
-           "\[IndentingNewLine]", 
-           RowBox[{"Fgp", " ", "=", " ", 
-            RowBox[{"Fg", " ", "-", " ", "Fgn"}]}], ";", 
-           "\[IndentingNewLine]", 
-           RowBox[{"FgpL", "=", " ", 
-            RowBox[{"Norm", "[", "Fgp", "]"}]}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{"Force", " ", "of", " ", "N"}], "*)"}], 
-           "\[IndentingNewLine]", 
-           RowBox[{"Fn", " ", "=", " ", 
-            RowBox[{"-", "Fgn"}]}], ";", "\[IndentingNewLine]", 
-           RowBox[{"FnL", " ", "=", " ", 
-            RowBox[{"Norm", "[", "Fn", "]"}]}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{
-            "Finding", " ", "if", " ", "its", " ", "static", " ", "or", " ", 
-             "kinetic"}], "*)"}], "\[IndentingNewLine]", 
-           RowBox[{"FfU", " ", "=", " ", 
-            RowBox[{"uStatic", 
-             RowBox[{"(", "FnHat", ")"}]}]}], ";", "\[IndentingNewLine]", 
-           RowBox[{"frictionType", " ", "=", " ", 
-            RowBox[{"If", "[", 
+             RowBox[{"FgpL", "!=", "0"}], ",", 
              RowBox[{
-              RowBox[{"FfU", " ", "\[LessEqual]", " ", "FgpL"}], ",", " ", 
-              "\"\<Kinetic\>\"", " ", ",", " ", "\"\<Static\>\""}], "]"}]}], 
-           ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
-           RowBox[{"(*", 
+              RowBox[{"-", 
+               RowBox[{"(", 
+                RowBox[{"1", "/", "FgpL"}], ")"}]}], " ", "Fgp"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "0"}], "}"}]}], "]"}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"Direction", " ", "of", " ", "friction"}], "*)"}], 
+          RowBox[{"FfK", "=", 
+           RowBox[{"uKinetic", " ", "FnL"}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"Kinetic", " ", "friction", " ", "magnitude"}], "*)"}], 
+          RowBox[{"FfV", "=", 
+           RowBox[{"If", "[", 
             RowBox[{
-             RowBox[{"Kinetic", " ", "so", " ", "we"}], ",", " ", 
-             RowBox[{"find", " ", "Kinetic", " ", "friction"}]}], "*)"}], 
-           "\[IndentingNewLine]", 
-           RowBox[{"FfHat", " ", "=", " ", 
+             RowBox[{"frictionType", "==", "\"\<Kinetic\>\""}], ",", 
+             RowBox[{"FfK", " ", "FfHat"}], ",", 
+             RowBox[{"-", "Fgp"}]}], "]"}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"Friction", " ", "force"}], "*)"}], 
+          RowBox[{"(*", 
+           RowBox[{"Net", " ", "Force"}], "*)"}], 
+          RowBox[{"Fnet", "=", 
+           RowBox[{"Fgp", "+", "FfV"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", "Acceleration", "*)"}], 
+          RowBox[{"aV", "=", 
+           RowBox[{"Fnet", "/", "mass"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"Update", " ", "Velocity", " ", "and", " ", "Position"}], 
+           "*)"}], 
+          RowBox[{"v", "=", 
+           RowBox[{"v", "+", 
+            RowBox[{"aV", " ", "tA"}]}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"New", " ", "velocity"}], "*)"}], 
+          RowBox[{"p", "=", 
+           RowBox[{"p", "+", 
+            RowBox[{"v", " ", "tA"}]}]}], ";", 
+          RowBox[{"(*", 
+           RowBox[{"New", " ", "position"}], "*)"}], 
+          RowBox[{"(*", 
+           RowBox[{"Increment", " ", "time"}], "*)"}], 
+          RowBox[{"t", "+=", "tA"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"Store", " ", "position", " ", "for", " ", "plotting"}], 
+           "*)"}], 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"trajectory", ",", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", "p"}], "}"}]}], "]"}], ";"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", "trajectory"}]}], " ", 
+     RowBox[{"(*", 
+      RowBox[{"Return", " ", "trajectory", " ", "data"}], "*)"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{"Run", " ", "the", " ", "2", "D", " ", "simulation"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"trajectoryData2D", "=", 
+    RowBox[{"simulateObjectMotion2D", "[", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\n", 
+  RowBox[{"(*", 
+   RowBox[{"Visualization", " ", "using", " ", "Manipulate"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"currentData", ",", "currentPoint"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"currentData", "=", 
+       RowBox[{
+        RowBox[{"Select", "[", 
+         RowBox[{"trajectoryData2D", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<=", "t"}], "&"}]}], "]"}], "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"currentPoint", "=", 
+       RowBox[{
+        RowBox[{"SelectFirst", "[", 
+         RowBox[{"trajectoryData2D", ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">=", "t"}], "&"}]}], "]"}], "[", 
+        RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+          RowBox[{"Point", "[", "currentData", "]"}], ",", 
+          RowBox[{"Style", "[", 
+           RowBox[{
+            RowBox[{"Point", "[", "currentPoint", "]"}], ",", "Red", ",", 
+            RowBox[{"PointSize", "[", "Large", "]"}]}], "]"}]}], "}"}], ",", 
+        RowBox[{"Axes", "->", "True"}], ",", 
+        RowBox[{"AxesOrigin", "->", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+        RowBox[{"PlotRange", "->", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
             RowBox[{
-             RowBox[{"-", 
-              FractionBox["1", "FgpL"]}], "Fgp"}]}], ";", 
-           "\[IndentingNewLine]", 
-           RowBox[{"FfK", "=", " ", 
-            RowBox[{"uKinetic", "*", "FnL"}]}], ";", "\[IndentingNewLine]", 
-           RowBox[{"FfV", " ", "=", " ", 
-            RowBox[{"FfK", "*", "FfHat"}]}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{"Force", " ", "Net"}], " ", "*)"}], "\[IndentingNewLine]", 
-           RowBox[{"Fnet", " ", "=", " ", 
-            RowBox[{"Fgp", " ", "+", " ", "FfV"}]}], ";", 
-           "\[IndentingNewLine]", "\[IndentingNewLine]", 
-           RowBox[{"(*", "Acceleration", "*)"}], "\[IndentingNewLine]", 
-           RowBox[{"aV", " ", "=", " ", 
+             RowBox[{"-", "2"}], ",", "5"}], "}"}], ",", 
+           RowBox[{"{", 
             RowBox[{
-             FractionBox["1", "mass"], "Fnet"}]}], ";", "\[IndentingNewLine]", 
-           RowBox[{"aL", " ", "=", " ", 
-            RowBox[{"Norm", "[", "aV", "]"}]}], ";", "\[IndentingNewLine]", 
-           RowBox[{"aHat", " ", "=", " ", 
-            RowBox[{
-             FractionBox["1", "aL"], "aV"}]}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"v", "=", 
-            RowBox[{"v", "+", 
-             RowBox[{"aV", " ", "tA"}]}]}], ";", "\[IndentingNewLine]", 
-           RowBox[{"p", "=", 
-            RowBox[{"p", "+", 
-             RowBox[{"v", " ", "tA"}]}]}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{"Increment", " ", "time"}], "*)"}], "\[IndentingNewLine]", 
-           RowBox[{"t", "+=", "tA"}], ";", "\[IndentingNewLine]", 
-           "\[IndentingNewLine]", 
-           RowBox[{"(*", 
-            RowBox[{"Store", " ", "position", " ", "for", " ", "plotting"}], 
-            "*)"}], "\[IndentingNewLine]", 
-           RowBox[{"AppendTo", "[", 
-            RowBox[{"trajectory", ",", "p"}], "]"}], ";"}]}], 
-         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-        "trajectory"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
-      "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"trajectoryData", "=", 
-     RowBox[{"simulateObjectMotion", "[", "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   RowBox[{"ListPointPlot3D", "[", 
-    RowBox[{"trajectoryData", ",", "\[IndentingNewLine]", 
-     RowBox[{"PlotStyle", "\[Rule]", 
-      RowBox[{"PointSize", "[", "Medium", "]"}]}], ",", "\[IndentingNewLine]", 
-     RowBox[{"AxesLabel", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"\"\<X\>\"", ",", "\"\<Y\>\"", ",", "\"\<Z\>\""}], "}"}]}], 
-     ",", "\[IndentingNewLine]", 
-     RowBox[{"PlotRange", "\[Rule]", "All"}], ",", "\[IndentingNewLine]", 
-     RowBox[{"PlotLabel", "\[Rule]", "\"\<Trajectory of the Object\>\""}], 
-     ",", "\[IndentingNewLine]", 
-     RowBox[{"BoxRatios", "\[Rule]", 
-      RowBox[{"{", 
-       RowBox[{"1", ",", "1", ",", "1"}], "}"}]}]}], "]"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
- CellChangeTimes->{{3.9422429394598894`*^9, 3.942243080417141*^9}, {
-   3.9422431598612776`*^9, 3.942243275351593*^9}, {3.9422433727270184`*^9, 
-   3.9422434208169374`*^9}, {3.9422435353351984`*^9, 3.942243747821496*^9}, {
-   3.9422439404306245`*^9, 3.9422440949171767`*^9}, {3.942244180546917*^9, 
-   3.9422442096304197`*^9}, {3.942244294382599*^9, 3.942244469257453*^9}, {
-   3.9422445011465874`*^9, 3.9422445651404448`*^9}, {3.9422445987045193`*^9, 
-   3.9422447083311825`*^9}, {3.9422447517933507`*^9, 3.9422447816376157`*^9}, 
-   3.9422458670236073`*^9, {3.942246835723011*^9, 3.942246939954937*^9}, {
-   3.9422470261142664`*^9, 3.9422471180481772`*^9}, {3.9422471787850747`*^9, 
-   3.942247203223795*^9}, {3.9422472401798563`*^9, 3.942247620462084*^9}, {
-   3.9422476515991774`*^9, 3.942248215898328*^9}, {3.9423130315946407`*^9, 
-   3.9423131978546677`*^9}, {3.9423132291008573`*^9, 
-   3.9423132793768673`*^9}, {3.942313338522805*^9, 3.9423134140288935`*^9}, {
-   3.942314777324179*^9, 3.9423148533674912`*^9}, {3.9423148938175697`*^9, 
-   3.9423149802194166`*^9}, {3.9423150662083874`*^9, 
-   3.9423151075424705`*^9}, {3.9423156724313145`*^9, 3.94231571059841*^9}, 
-   3.9423157521744285`*^9, {3.9423158331202717`*^9, 3.9423159154043617`*^9}, {
-   3.9423159609307547`*^9, 3.9423160217773356`*^9}, {3.942317025691973*^9, 
-   3.9423171102272596`*^9}},
- CellLabel->"In[31]:=",ExpressionUUID->"db6b7357-002a-4eb8-ab18-96c288c13a36"],
+             RowBox[{"-", "2"}], ",", "5"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "->", "1"}], ",", 
+        RowBox[{"PlotLabel", "->", "\"\<Trajectory of the Object\>\""}]}], 
+       "]"}]}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0.1", ",", "\"\<Time\>\""}], "}"}], ",", 
+     RowBox[{"trajectoryData2D", "[", 
+      RowBox[{"[", 
+       RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", 
+     RowBox[{"trajectoryData2D", "[", 
+      RowBox[{"[", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "0.01"}], "}"}]}], 
+  "]"}], "\n"}], "Input",
+ CellChangeTimes->{{3.942390180836553*^9, 3.9423901808375015`*^9}},
+ CellLabel->
+  "In[660]:=",ExpressionUUID->"b5fd327f-678c-40a5-a336-f3e3f15c35d4"],
 
 Cell[BoxData[
- Graphics3DBox[{{
-    {RGBColor[0.3315753, 0.4561011, 0.6388182], PointSize[Medium], 
-     Point3DBox[CompressedData["
-1:eJwNlHk41IsXxr+zM+SqXKXI2iLZoqLoe24XWcqWQklxI0tUcon8lGuJNl1U
-llJStlJK6dZUx15kKckIaQiNbSayZZn5+eP957zP8z7P55zzvKqeRx29qARB
-+M6LNq9lEpzFN0RCHF8Y1J1MEFD3KegBT8QC26X6W7gzQvy6YU8uh0LAoSgX
-qduzLLiu5xnyYFKI6H/fNpRGwBvqI3mzXyygOdhWqY0KMaU4uLWaQcCEa8T7
-6jEWxISNrzYcFKL7godmBRIEjMS9MForZIFygXNmd7cQlcL2JatKE/Bfgr9d
-IJ8Fzd3Ba3Q+C7FpIqxynSwBNp6Jcsk8FmSr76yWbxBiRBy79Z0cAfmyq+JT
-uSy4cIQXer1MiMvXLGgQKRDwMUW3ILKeBYmvdEyxWIgP26NyqpQJqBHcCzcv
-Z8E9eSP503eEaJTl46GyioDzKzJ+DT1lQVfoLLUjWYjPTpaJZLQJUNCYW/V3
-Hgv0u07RWqKEqOV5IfJfQwKCxB+onWksyHAsWRIQOM+7v4aXa0LAtSKFi6vP
-zXPV3SOzXIU46ndypaM5AfGbmqscwljwaqfbqaA/hWhxLm3HZVsCzFMohW6H
-WfA3900tT0uIiZx1ezxdCGioztpm6cSC7b4C7aFFQqwX6W9760mAWuOTODlg
-wXra+zspUwIknPJlywMI2Fa4OaxsLQs23T2i29YhwDWcpDK7MAJ0PAyW2cmx
-YI9dZf1LFKCFocDpeCwBfQOZvq9mmZBI4Z42yRKgK3JqVyUR4Gv9v8PSPUzo
-5twxd40SoIfbjNqxm/N3Od2w2KSWCXaR2sqLDwrQXapw/87C+T2fSwrc8ZAJ
-LZbHpf1MBehQ9z78NYeAF/41oabJTAhZfmyBu4IAjW96h1fUEhCgdkL3txAm
-6E1oqgl/DqN8TKCbWxsBgw8Sr5Q5M4H+OdNaqX4Y+eF8lYQBAjYsVC5wMmLC
-aEVDHP/OMBZFN7+xmpn/ByvVgLdLmDBd8rzF/tQwBmSud8iUpoC289VOxQkG
-KD4+sHmP/TAqv6O+iltBgfbNkSKHjwxweVr6aEp9GKslzaVo+hRwGmutO/yQ
-AYWlHSZGE0PouffXlsVmFEiLzrFyPzef01zcLvdmCMdeKts9c6ZAAb8veMMh
-BtwVml+6dHUIT+n/Zyb0p8BZ9XTbYRMGWC5Odrp7aAgnn5Urcs5QQM+wtCVW
-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
-/w/KWrSA
-      "]]}, {}, {}}, {}},
-  Axes->True,
-  AxesLabel->{
-    FormBox["\"X\"", TraditionalForm], 
-    FormBox["\"Y\"", TraditionalForm], 
-    FormBox["\"Z\"", TraditionalForm]},
-  BoxRatios->{1, 1, 1},
-  DisplayFunction->Identity,
-  FaceGrids->None,
-  FaceGridsStyle->Automatic,
-  ImageSize->{396.9995120026528, 410.0669397466052},
-  ImageSizeRaw->Automatic,
-  Lighting->{{"Ambient", 
-     GrayLevel[0.5]}, {"Directional", 
-     GrayLevel[0.5], 
-     ImageScaled[{0, 2, 2}]}, {"Directional", 
-     GrayLevel[0.5], 
-     ImageScaled[{2, 2, 2}]}, {"Directional", 
-     GrayLevel[0.5], 
-     ImageScaled[{2, 0, 2}]}},
-  PlotLabel->FormBox["\"Trajectory of the Object\"", TraditionalForm],
-  PlotRange->{All, All, All},
-  PlotRangePadding->{{0, 0}, {0, 0}, {0, 0}},
-  Ticks->{Automatic, Automatic, Automatic},
-  ViewPoint->{
-   3.3531308820980783`, -0.052710655772617805`, -0.4513699971067891},
-  ViewVertical->{0.6695493504005658, 0.5698327727403676, 
-   0.4764391655701752}]], "Output",
- CellChangeTimes->{3.942325309879451*^9},
- CellLabel->"Out[42]=",ExpressionUUID->"fbfd83f6-a711-426b-91be-113099c865cd"]
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`t$$ = 2.149999999999998, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`t$$], 0.1, "Time"}, 0.01, 2.149999999999998, 0.01}}, 
+    Typeset`size$$ = {251.99999999999997`, {131., 133.4875978584634}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`t$$ = 0.1}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`currentData$, $CellContext`currentPoint$}, \
+$CellContext`currentData$ = Part[
+           
+           Select[$CellContext`trajectoryData2D, 
+            Part[#, 1] <= $CellContext`t$$& ], All, 
+           2]; $CellContext`currentPoint$ = Part[
+           
+           SelectFirst[$CellContext`trajectoryData2D, 
+            Part[#, 1] >= $CellContext`t$$& ], 2]; Graphics[{
+           PointSize[Medium], 
+           Point[$CellContext`currentData$], 
+           Style[
+            Point[$CellContext`currentPoint$], Red, 
+            PointSize[Large]]}, Axes -> True, AxesOrigin -> {0, 0}, 
+          PlotRange -> {{-2, 5}, {-2, 5}}, AspectRatio -> 1, PlotLabel -> 
+          "Trajectory of the Object"]], 
+      "Specifications" :> {{{$CellContext`t$$, 0.1, "Time"}, 0.01, 
+         2.149999999999998, 0.01}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{289., {163.9938232632121, 168.0061767367879}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.9423782104536457`*^9, 3.942378366010538*^9, {3.9423784842134027`*^9, 
+   3.9423785829784155`*^9}, 3.9423790088679323`*^9, 3.94237932364366*^9, 
+   3.9423793795235777`*^9, {3.94238071513395*^9, 3.9423807308322597`*^9}, 
+   3.942380808774825*^9, {3.942388695627264*^9, 3.9423886997065125`*^9}, {
+   3.9423892385878897`*^9, 3.942389243375963*^9}, 3.9423893335177665`*^9, {
+   3.9423895395172014`*^9, 3.9423895463815713`*^9}, 3.942389659499552*^9, 
+   3.942389817366788*^9, 3.9423899669712424`*^9, 3.9423903720353756`*^9, 
+   3.94239050590269*^9},
+ CellLabel->
+  "Out[662]=",ExpressionUUID->"3cd00c3c-c2a3-48cb-aa80-a08fc0f45d62"]
 }, Open  ]]
 },
-WindowSize->{1248, 1381},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
-Magnification:>0.9 Inherited,
-FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 9, 2020)",
+WindowSize->{718.5, 735.},
+WindowMargins->{{-5.25, Automatic}, {Automatic, 0}},
+Magnification:>0.7 Inherited,
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (February 4, 2022)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"7d2908f7-cb3e-4abd-852e-8b82cf60ba3b"
 ]
@@ -349,8 +360,8 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 9915, 216, 1511, "Input",ExpressionUUID->"db6b7357-002a-4eb8-ab18-96c288c13a36"],
-Cell[10498, 240, 4601, 89, 407, "Output",ExpressionUUID->"fbfd83f6-a711-426b-91be-113099c865cd"]
+Cell[580, 22, 10241, 259, 553, "Input",ExpressionUUID->"b5fd327f-678c-40a5-a336-f3e3f15c35d4"],
+Cell[10824, 283, 2937, 57, 345, "Output",ExpressionUUID->"3cd00c3c-c2a3-48cb-aa80-a08fc0f45d62"]
 }, Open  ]]
 }
 ]
